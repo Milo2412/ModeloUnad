@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Estante;
+use App\Models\User;
 
 class EstanteController extends Controller
 {
@@ -95,9 +96,10 @@ public function limpiarEstante($id)
         $estante->imagenes_productos_url = null; // Limpiar el campo de imágenes de productos
         $estante->save(); // Guardar los cambios en la base de datos
         return response()->json(['message' => 'Estante limpiado correctamente']);
-    } else {
+    } 
+    else 
+    {
         return response()->json(['message' => 'Estante no encontrado'], 404);
     }
 }
-
 }
