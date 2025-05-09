@@ -15,7 +15,7 @@ class CreateEstantesTable extends Migration
     {
         Schema::create('estantes', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id')->unique(); // vínculo con el usuario
+            $table->unsignedBigInteger('user_id')->nullable(); // vínculo con el usuario
             $table->string('instagram')->nullable();
             $table->string('facebook')->nullable();
             $table->string('whatsapp')->nullable();

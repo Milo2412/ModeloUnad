@@ -14,5 +14,10 @@ class Estante extends Model
     protected $casts = [
         'imagenes_productos_url' => 'array'
     ];
+
+public function user()
+{
+    return $this->belongsTo(User::class, 'id_user');
+}
 }
 

@@ -30,6 +30,7 @@ public function register(Request $request)
     $user = User::create([
         'email' => $request->email,
         'password' => Hash::make($request->password),
+        'rol' => 'Usuario'
     ]);
 
     $code = rand(100000, 999999);
@@ -37,7 +38,7 @@ public function register(Request $request)
     EmailVerificationCode::create([
         'user_id' => $user->id,
         'code' => $code,
-        'expires_at' => now()->addMinutes(10),
+        'expires_at' => now()->addMinutes(3),
     ]);
 
     // Enviar correo HTML con estilo personalizado
@@ -49,7 +50,7 @@ public function register(Request $request)
             <div style='font-size: 24px; font-weight: bold; color: #ffffff; background: #0047AB; padding: 10px; display: inline-block; border-radius: 5px; margin: 10px 0;'>
                 $code
             </div>
-            <p style='font-size: 14px; color: #0047AB;'>Este código expirará en 10 minutos.</p>
+            <p style='font-size: 14px; color: #0047AB;'>Este código expirará en 3 minutos.</p>
             <hr style='border: none; border-top: 1px solid #0047AB; margin: 20px 0;'>
             <p style='font-size: 12px; color: #0047AB;'>Si no solicitaste este código, puedes ignorar este mensaje.</p>
         </div>
@@ -98,6 +99,7 @@ public function login(Request $request)
     ]);
 
     $user = User::where('email', $request->email)->first();
+
     if (!$user || !Hash::check($request->password, $user->password)) {
         return response()->json(['error' => 'Credenciales inválidas'], 401);
     }
@@ -106,39 +108,18 @@ public function login(Request $request)
         return response()->json(['error' => 'Correo no verificado'], 403);
     }
 
-    // Puedes usar Sanctum o Passport para generar token
+    // Crear token con Sanctum
     $token = $user->createToken('auth_token')->plainTextToken;
 
-    return response()->json(['token' => $token]);
-}
-
-public function checkUsername(Request $request)
-{
-    $request->validate([
-        'username' => 'required|string|min:3|max:20'
+    // Retornar también rol, id y email para que Unity actúe según el rol
+    return response()->json([
+        'success' => true,
+        'token' => $token,
+        'user' => [
+            'id' => $user->id,
+            'email' => $user->email,
+            'rol' => $user->rol
+        ]
     ]);
-
-    $exists = User::where('name', $request->username)->exists();
-
-    if ($exists) {
-        return response()->json(['error' => 'Nombre de usuario no disponible'], 409);
-    }
-
-    return response()->json(['message' => 'Nombre disponible'], 200);
 }
-
-public function updateProfile(Request $request)
-{
-    $request->validate([
-        'username' => 'required|string|min:8|max:10'
-    ]);
-
-    $user = $request->user(); // ← Esto usa el token de autenticación enviado desde Unity
-
-    $user->name = $request->username;
-    $user->save();
-
-    return response()->json(['message' => 'Perfil actualizado exitosamente'], 200);
-}
-
 }
