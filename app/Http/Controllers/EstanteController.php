@@ -56,7 +56,7 @@ public function asignarUsuario($id, Request $request)
 {
     // Validar el user_id para asegurarse de que existe un usuario con ese ID
     $request->validate([
-        'user_id' => 'required|exists:users, id',
+        'user_id' => 'required|exists:users,id',
     ]);
 
     // Buscar el estante por su ID
