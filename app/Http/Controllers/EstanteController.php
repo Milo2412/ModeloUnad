@@ -48,7 +48,7 @@ public function mostrar($id)
 
 public function listarEstantes()
 {
-    $estantes = Estante::with('user:id,name')->get(); // asumiendo que relación con User está definida
+    $estantes = Estante::with('user:id,nombre')->get();
     return response()->json($estantes);
 }
 
