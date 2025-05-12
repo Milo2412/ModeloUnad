@@ -54,13 +54,26 @@ public function listarEstantes()
 
 public function asignarUsuario($id, Request $request)
 {
+    // Validar el user_id para asegurarse de que existe un usuario con ese ID
     $request->validate([
-    'user_id' => 'required|exists:users,id',
-]);
+        'user_id' => 'required|exists:users,id',
+    ]);
 
+    // Buscar el estante por su ID
+    $estante = Estante::find($id);
+
+    // Verificar si el estante existe
+    if (!$estante) {
+        return response()->json(['error' => 'Estante no encontrado'], 404);
+    }
+
+    // Asignar el user_id al estante
     $estante->user_id = $request->user_id;
+    
+    // Guardar los cambios en el estante
     $estante->save();
 
+    // Retornar una respuesta con el mensaje de éxito
     return response()->json(['mensaje' => 'Usuario asignado con éxito']);
 }
 
