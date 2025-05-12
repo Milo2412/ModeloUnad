@@ -48,7 +48,7 @@ public function mostrar($id)
 
 public function listarEstantes()
 {
-    $estantes = Estante::with('user:id,nombre')->get();
+    $estantes = Estante::with('user : id, name')->get();
     return response()->json($estantes);
 }
 
