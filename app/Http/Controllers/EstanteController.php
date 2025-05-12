@@ -56,7 +56,7 @@ public function asignarUsuario($id, Request $request)
 {
     // Validar el user_id para asegurarse de que existe un usuario con ese ID
     $request->validate([
-        'user_id' => 'required|exists:users,id',
+        'user_id' => 'required|exists:users, id',
     ]);
 
     // Buscar el estante por su ID
@@ -81,7 +81,7 @@ public function misEstantes(Request $request)
 {
     $user = $request->user();
 
-    $estantes = Estante::where('id_user', $user->id)->get();
+    $estantes = Estante::where('user_id', $user->id)->get();
 
     if ($estantes->isEmpty()) {
         return response()->json([
