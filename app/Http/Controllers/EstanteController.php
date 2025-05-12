@@ -55,11 +55,10 @@ public function listarEstantes()
 public function asignarUsuario($id, Request $request)
 {
     $request->validate([
-        'id_user' => 'required|exists:users,id',
-    ]);
+    'user_id' => 'required|exists:users,id',
+]);
 
-    $estante = Estante::findOrFail($id);
-    $estante->id_user = $request->id_user;
+    $estante->user_id = $request->user_id;
     $estante->save();
 
     return response()->json(['mensaje' => 'Usuario asignado con éxito']);
