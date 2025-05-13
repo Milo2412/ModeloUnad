@@ -57,8 +57,8 @@ Route::middleware('auth:sanctum')->group(function () {
     //Actualizar publicidad del evento
     Route::put('/update-publicidad', [PublicidadController::class, 'actualizarPublicidad']);
 
-    // Actualizar estante (general)
-    Route::put('/update-estantes', [EstanteController::class, 'update']);
+    // Actualizar estante por id
+    Route::put('/estantes/{id}/update', [EstanteController::class, 'update']);
 
     //Mostrar los estantes asignados a un usuario
     Route::get('/mis-estantes', [EstanteController::class, 'misEstantes']);

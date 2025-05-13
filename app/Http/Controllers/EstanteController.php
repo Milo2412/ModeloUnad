@@ -9,9 +9,9 @@ use App\Models\User;
 class EstanteController extends Controller
 {
 
-public function update(Request $request)
+public function update(Request $request, $id)
 {
-    $user = $request->user(); // Requiere token con Sanctum
+    $user = $request->user();
 
     $data = $request->validate([
         'instagram' => 'nullable|string',
@@ -21,10 +21,8 @@ public function update(Request $request)
         'imagenes_productos_url' => 'nullable|array'
     ]);
 
-    $estante = Estante::update(
-        ['user_id' => $user->id],
-        $data
-    );
+    $estante = Estante::where('user_id', $user->id)->findOrFail($id);
+    $estante->update($data);
 
     return response()->json(['message' => 'Estante actualizado con éxito', 'data' => $estante]);
 }
