@@ -32,6 +32,11 @@ Route::post('/check-username', [UserController::class, 'checkUsername']);
 // Mostrar informacion del estante
 Route::get('/estante/{id}', [EstanteController::class, 'mostrar']);
 
+// Obtener la información de publicidad
+Route::get('/publicidad', [PublicidadController::class, 'obtenerPublicidad']);
+
+//Enlistar estantes
+Route::get('/listar-estantes', [EstanteController::class, 'listarEstantes']);
 
 Route::middleware('auth:sanctum')->group(function () {
 
@@ -49,14 +54,8 @@ Route::middleware('auth:sanctum')->group(function () {
     // Asignar un usuario a un estante (actualiza id_user)
     Route::put('/estantes/{id}/asignar-usuario', [EstanteController::class, 'asignarUsuario']);
 
-    // Obtener la información de publicidad
-    Route::get('/publicidad', [PublicidadController::class, 'obtenerPublicidad']);
-
     //Actualizar publicidad del evento
     Route::put('/update-publicidad', [PublicidadController::class, 'actualizarPublicidad']);
-
-    //Enlistar estantes
-    Route::get('/listar-estantes', [EstanteController::class, 'listarEstantes']);
 
     // Actualizar estante (general)
     Route::put('/update-estantes', [EstanteController::class, 'update']);
