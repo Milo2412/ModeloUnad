@@ -98,7 +98,7 @@ public function limpiarEstante($id)
 {
     $estante = Estante::find($id);
     if ($estante) {
-        $estante->usuario_id = null; // Limpiar el usuario asignado
+        $estante->user_id = null; // Limpiar el usuario asignado
         $estante->instagram = null; // Limpiar el campo de Instagram
         $estante->facebook = null; // Limpiar el campo de Facebook
         $estante->whatsapp = null; // Limpiar el campo de WhatsApp
