@@ -6,6 +6,11 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\EstanteController;
 use App\Http\Controllers\PublicidadController;
+use App\Http\Controllers\ZonaController;
+use App\Http\Controllers\ClicRedSocialController;
+use App\Http\Controllers\DuracionZonaController;
+
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -38,6 +43,18 @@ Route::get('/publicidad', [PublicidadController::class, 'obtenerPublicidad']);
 //Enlistar estantes
 Route::get('/listar-estantes', [EstanteController::class, 'listarEstantes']);
 
+//Registrar visita a zona
+Route::post('/registrar-zona', [ZonaController::class, 'registrar']);
+
+//Registrar click sobre una red social
+Route::post('/registrar-clic-red', [ClicRedSocialController::class, 'registrar']);
+
+// Registrar hora de entrada a la zona
+Route::post('/duracion-zona/entrada', [DuracionZonaController::class, 'registrarEntrada']);
+
+// Registrar hora de salida a la zona
+Route::post('/duracion-zona/salida', [DuracionZonaController::class, 'registrarSalida']);
+
 Route::middleware('auth:sanctum')->group(function () {
 
     // Obtener el perfil del usuario autenticado
@@ -65,4 +82,10 @@ Route::middleware('auth:sanctum')->group(function () {
 
     //Limpiar datos de estante
     Route::delete('/estantes/{id}/limpiar', [EstanteController::class, 'limpiarEstante']);
+
+    // Obtener datos de dashboard general 
+    Route::get('/dashboard/general', [DashboardController::class, 'general']);
+
+    //Obtener datos de dashboard por estante
+    Route::get('/dashboard/estante/{id}', [DashboardController::class, 'porEstante']);
 });
