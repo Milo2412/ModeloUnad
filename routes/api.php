@@ -9,7 +9,7 @@ use App\Http\Controllers\PublicidadController;
 use App\Http\Controllers\ZonaController;
 use App\Http\Controllers\ClicRedSocialController;
 use App\Http\Controllers\DuracionZonaController;
-
+use App\Http\Controllers\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
