@@ -50,10 +50,10 @@ Route::post('/registrar-zona', [ZonaController::class, 'registrar']);
 Route::post('/registrar-clic-red', [ClicRedSocialController::class, 'registrar']);
 
 // Registrar hora de entrada a la zona
-Route::post('/duracion-zona/entrada', [DuracionZonaController::class, 'registrarEntrada']);
+Route::post('/registrarEntrada', [DuracionZonaController::class, 'registrarEntrada']);
 
 // Registrar hora de salida a la zona
-Route::post('/duracion-zona/salida', [DuracionZonaController::class, 'registrarSalida']);
+Route::post('/registrarSalida', [DuracionZonaController::class, 'registrarSalida']);
 
 Route::middleware('auth:sanctum')->group(function () {
 
