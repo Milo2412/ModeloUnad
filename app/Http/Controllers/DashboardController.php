@@ -9,12 +9,12 @@ class DashboardController extends Controller
 {
 public function general()
 {
-    $entradasLobby = DB::table('duracion_zonas')->where('zona', 'Lobby')->count();
+    $entradasLobby = DB::table('zonas_visitadas')->where('zona', 'Lobby')->count();
     $usuariosUnicos = DB::table('duracion_zonas')->distinct('visita_id')->count('visita_id');
     $zonas = DB::table('duracion_zonas')
                 ->select('zona', DB::raw('COUNT(*) as visitas'))
                 ->groupBy('zona')->get();
-    $clicksRedes = DB::table('interacciones_redes')->count();
+    $clicksRedes = DB::table('clics_redes')->count();
     $comparacionZonas = DB::table('duracion_zonas')
                 ->select('zona', DB::raw('ROUND(AVG(TIMESTAMPDIFF(SECOND, entrada, salida)),2) as tiempo_promedio'))
                 ->whereNotNull('salida')
@@ -33,7 +33,7 @@ public function porEstante($id)
 {
     $nombreZona = 'Estante_' . $id;
 
-    $clicks = DB::table('interacciones_redes')
+    $clicks = DB::table('clics_redes')
                 ->select('red_social', DB::raw('COUNT(*) as total'))
                 ->where('estante_id', $id)
                 ->groupBy('red_social')->get();
